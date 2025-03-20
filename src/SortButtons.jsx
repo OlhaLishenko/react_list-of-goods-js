@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { useEffect, useState } from 'react';
-import { goodsFromServer } from '../../App';
+import { goodsFromServer } from './App';
 
 export const SortButtons = ({ visibleGoods, setVisibleGoods, goods }) => {
   const sortButtons = [
@@ -59,8 +59,8 @@ export const SortButtons = ({ visibleGoods, setVisibleGoods, goods }) => {
           )}
           onClick={() =>
             setActiveButton(prev =>
-              prev !== button ? button : setVisibleGoods(goodsFromServer),
-            )
+              // eslint-disable-next-line prettier/prettier
+              prev !== button ? button : setVisibleGoods(goodsFromServer))
           }
         >
           {button}

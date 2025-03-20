@@ -2,8 +2,8 @@ import 'bulma/css/bulma.css';
 import './App.scss';
 import { useState } from 'react';
 
-import { SortButtons } from './components/SortButtons';
-import { GoodList } from './components/GoodList/GoodList';
+import { SortButtons } from './SortButtons';
+import { GoodList } from './GoodList';
 
 export const goodsFromServer = [
   'Dumplings',
