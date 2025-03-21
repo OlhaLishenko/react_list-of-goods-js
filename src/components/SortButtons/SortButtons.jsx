@@ -1,6 +1,18 @@
 import cn from 'classnames';
 import { useEffect, useState } from 'react';
-import { goodsFromServer } from '../../App';
+
+export const goodsFromServer = [
+  'Dumplings',
+  'Carrot',
+  'Eggs',
+  'Ice cream',
+  'Apple',
+  'Bread',
+  'Fish',
+  'Honey',
+  'Jam',
+  'Garlic',
+];
 
 export const SortButtons = ({ visibleGoods, setVisibleGoods, goods }) => {
   const sortButtons = [
@@ -16,28 +28,47 @@ export const SortButtons = ({ visibleGoods, setVisibleGoods, goods }) => {
   const DANGER = 'is-danger';
 
   const [activeButton, setActiveButton] = useState('');
+  const [noVisibleReset, setVisibleReset] = useState('none');
+
+  function handleVisibility(button) {
+    if (button === 'Reset') {
+      return noVisibleReset;
+    }
+
+    return 0;
+  }
 
   useEffect(() => {
     if (activeButton === 'Sort alphabetically') {
       setVisibleGoods(
         [...visibleGoods].sort((good1, good2) => good1.localeCompare(good2)),
       );
+      setVisibleReset('flex');
     }
 
     if (activeButton === 'Sort by length') {
       setVisibleGoods(
         [...visibleGoods].sort((good1, good2) => good1.length - good2.length),
       );
+      setVisibleReset('flex');
     }
 
     if (activeButton === 'Reverse') {
       setVisibleGoods([...visibleGoods].reverse());
+      setVisibleReset('flex');
     }
 
     if (activeButton === 'Reset') {
       setVisibleGoods(goods);
+      setVisibleReset('none');
     }
   }, [activeButton]);
+
+  useEffect(() => {
+    if (visibleGoods === goodsFromServer) {
+      setVisibleReset('none');
+    }
+  }, [visibleGoods]);
 
   return (
     <div className="buttons">
@@ -57,11 +88,8 @@ export const SortButtons = ({ visibleGoods, setVisibleGoods, goods }) => {
               'is-light': activeButton !== button,
             },
           )}
-          onClick={() =>
-            setActiveButton(prev =>
-              // eslint-disable-next-line prettier/prettier
-              prev !== button ? button : setVisibleGoods(goodsFromServer))
-          }
+          style={{ display: handleVisibility(button) }}
+          onClick={() => setActiveButton(button)}
         >
           {button}
         </button>
